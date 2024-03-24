@@ -9,6 +9,7 @@ import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import SidebarOption from './SidebarOption';
+import TagIcon from '@mui/icons-material/Tag';
 import { Button } from '@mui/material';
 
 const Sidebar = () => {
@@ -16,7 +17,7 @@ const Sidebar = () => {
         <div className='sidebar'>
             <TwitterIcon className='sidebar-twitter-icon'/>
             <SidebarOption active text={'Home'} Icon={HomeIcon}/>
-            <SidebarOption text={'Explore'} Icon={SearchIcon}/>
+            <SidebarOption text={'Explore'} Icon={TagIcon}/>
             <SidebarOption text={'Notification'} Icon={NotificationsActiveIcon}/>
             <SidebarOption text={'Messages'} Icon={MailOutlineOutlinedIcon}/>
             <SidebarOption text={'Bookmarks'} Icon={BookmarkBorderOutlinedIcon}/>

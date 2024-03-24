@@ -9,7 +9,10 @@ const TweetBox = () => {
                     <Avatar/>
                     <input type="text" placeholder= "What's happening?"/>
                 </div>
-                <input type="text" placeholder='Enter image URL' className='tweet-box-input-img'/>
+                <input 
+                type="text" 
+                placeholder='Optional: Enter image URL' 
+                className='tweet-box-input-img'/>
 
                 <Button className='tweet-box-tweet-button'>Tweet</Button>
             </form>
