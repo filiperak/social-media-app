@@ -18,9 +18,10 @@ const Post = ({displayName,username,verified,text,image,avatar}) => {
                 <div className="post-header">
                     <div className="post-header-text">
                         <h3>
-                            filip_erak
-                            <span>
+                            filip erak
+                            <span className='post-header-special'>
                                 <VerifiedIcon className='post-badge'/>
+                                @username
                             </span>
                         </h3>
                     </div>
