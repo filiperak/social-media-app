@@ -7,6 +7,7 @@
     background-color: #e8f5fe;
     color: var(--twitter-color);
     transition: color 100ms ease-out;
+    border-radius: 30px;
 }
 .sidebar-option > .MuiSvgIcon-root{
     padding: 20px;
