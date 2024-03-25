@@ -14,7 +14,7 @@ import { Button } from '@mui/material';
 
 const Sidebar = () => {
     return (
-        <div className='sidebar'>
+        <div className='sidebar'>test123
             <TwitterIcon className='sidebar-twitter-icon'/>
             <SidebarOption active text={'Home'} Icon={HomeIcon}/>
             <SidebarOption text={'Explore'} Icon={TagIcon}/>
