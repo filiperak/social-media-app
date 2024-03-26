@@ -7,10 +7,12 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import PublishIcon from '@mui/icons-material/Publish';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-const Post = ({displayName,username,verified,text,image,avatar}) => {
+import { forwardRef } from 'react';
+
+const Post = forwardRef(({displayName,username,verified,text,image,avatar},ref) => {
 
     return (
-        <div className='post'>
+        <div className='post' ref={ref}>
             <div className="post-avatar">
             <Avatar src={avatar}/>
             </div>
@@ -43,5 +45,6 @@ const Post = ({displayName,username,verified,text,image,avatar}) => {
         </div>
     );
 }
+)
  
 export default Post;
