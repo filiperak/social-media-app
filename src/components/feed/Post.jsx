@@ -7,10 +7,14 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import PublishIcon from '@mui/icons-material/Publish';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { forwardRef } from 'react';
 
-const Post = forwardRef(({displayName,username,verified,text,image,avatar},ref) => {
+const Post = forwardRef(({displayName,username,verified,text,image,avatar,handleDelete, id},ref) => {
 
+    const onDeleteClick = () => {
+        handleDelete(id);
+    }
     return (
         <div className='post' ref={ref}>
             <div className="post-avatar">
@@ -31,14 +35,15 @@ const Post = forwardRef(({displayName,username,verified,text,image,avatar},ref) 
                         <p>{text}</p>
                     </div>
                 </div>
-                <img 
+                {image.trim().length != 0 && <img 
                 src={image}
-                alt="user img" />
+                alt="user img" />}
                 <div className="post-footer">
                     <ChatBubbleOutlineIcon fontSize='small'/>
                     <RepeatIcon fontSize='small'/>
                     <FavoriteBorderOutlinedIcon fontSize='small'/>
                     <PublishIcon fontSize='small'/>
+                    <span onClick={onDeleteClick}>X</span>
 
                 </div>
             </div>

@@ -11,6 +11,8 @@
 .post-body > img {
     border-radius: 20px;
     width: 100%;
+    height: auto;
+    max-width: 490px;
 }
 .post-footer{
     display: flex;

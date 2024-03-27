@@ -10,13 +10,24 @@ const Feed = () => {
     const [posts,setPosts] = useState([]);
 
     useEffect(() => {
-        db.collection("posts").onSnapshot((snapshot) =>
-          setPosts(snapshot.docs.map((doc) => doc.data()))
-        );
-        console.log(posts);
+        db.collection("posts")
+        .onSnapshot((snapshot) => {
+            setPosts(snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            })));
+        });
+    }, []);
+    const handleDelete = (postId) => {
+        db.collection('posts')
+        .doc(postId)
+        .delete()
+        .then(() => {
+            console.log('post deleted');
+        })
+        .catch((err) => console.log(err))
 
-      }, []);
-
+    }
     return (
         <div className='feed'>
             <div className="feed-header">
@@ -34,6 +45,8 @@ const Feed = () => {
                     text={post.text}
                     avatar={post.avatar}
                     image={post.image}
+                    handleDelete={handleDelete}
+                    id={post.id}
                 />
             ))}
             </FlipMove>
