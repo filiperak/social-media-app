@@ -8,7 +8,7 @@ import PublishIcon from '@mui/icons-material/Publish';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState , useRef} from 'react';
 import db, { auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Button } from '@mui/base';
@@ -39,6 +39,8 @@ const Post = forwardRef(({
     const [likeColor,setLikeColor] = useState(false);
     const [deleteButton,setDeleteButton] = useState(false);
     const [commentInput,setCommentInput] = useState('');
+    const [showComments,setShowComments] = useState(false);
+    const inputRef = useRef(null);
 
     const onDeleteClick = () => {
         if(uid != userUid){
@@ -60,7 +62,8 @@ const Post = forwardRef(({
     }
     const onCommentSubmit = (e) => {
         e.preventDefault();
-        handleComment(id,commentInput,userDisplayName)
+        handleComment(id,commentInput,userDisplayName);
+        setCommentInput('');
     }
     const formatTimestamp = (timestamp) => {
         if (!timestamp || !timestamp.seconds) {
@@ -69,6 +72,12 @@ const Post = forwardRef(({
         const date = new Date(timestamp.seconds * 1000);
         return date.toLocaleString();
     };
+    useEffect(() => {
+        if (showComments) {
+          inputRef.current.focus();
+        }
+    }, [showComments]);
+
     return (
         <div className='post' ref={ref}>
             <div className="post-avatar">
@@ -101,38 +110,48 @@ const Post = forwardRef(({
                 {image.trim().length != 0 && <img 
                 src={image}
                 alt="user img" />}
-                <div className="post-time-stamp">
-                <span>{formatTimestamp(created_at)}</span>
-                </div>
+
                 <div className="post-comments">
+                    <p>
+                        <p>{comments.length == 0?('no comments'):(`${comments.length} comments`)}</p>
+                        <p>{formatTimestamp(created_at)}</p>
+                    </p>
                     <div className="post-comment-list">
-                    {comments.length?(
+                    {showComments &&(
                         comments.map(elem =>  (
+                            <>
                             <div
                             key={elem.commentId}>
-                                <p>{elem.user}</p>
+                                <p>{elem.user}{':'}</p>
                                 <p>{elem.comment}</p>
                             </div>
+                            </>
                         ))
-                    ):(
-                        <span>no comments...</span>
+                    )}
+                    {showComments && (
+                        <form 
+                        onSubmit={onCommentSubmit}
+                        className="post-comment-input">
+                            <input 
+                            ref={inputRef}
+                            onChange={e => setCommentInput(e.target.value)}
+                            value={commentInput}
+                            type="text" 
+                            placeholder='add comment...'/>
+                            <Button type='submit'>
+                                Post
+                            </Button>
+                        </form>
                     )}
                     </div>
-                    <form 
-                    onSubmit={onCommentSubmit}
-                    className="post-comment-input">
-                        <input 
-                        onChange={e => setCommentInput(e.target.value)}
-                        value={commentInput}
-                        type="text" 
-                        placeholder='add comment...'/>
-                        <Button type='submit'>
-                            Post
-                        </Button>
-                    </form>
-                </div>
+
+                </div> 
+
+
                 <div className="post-footer">
-                    <ChatBubbleOutlineIcon fontSize='small'/>
+                    <ChatBubbleOutlineIcon 
+                    onClick={() => setShowComments(!showComments)}
+                    fontSize='small'/>
                     <RepeatIcon fontSize='small'/>
                     <div className="post-likes">
                     <FavoriteBorderOutlinedIcon 

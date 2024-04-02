@@ -34,7 +34,8 @@ const TweetBox = () => {
         <div className='tweet-box'>
             <form>
                 <div className="tweet-box-input">
-                    <Avatar/>
+                    <Avatar 
+                    />
                     <input 
                     onChange={e => setTweetMessage(e.target.value)}
                     value={tweetMesssage} 

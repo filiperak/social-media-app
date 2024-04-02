@@ -31,14 +31,14 @@ const Sidebar = () => {
     return (
         <div className='sidebar'>
             <TwitterIcon className='sidebar-twitter-icon'/>
-            <SidebarOption text={'Home'} Icon={HomeIcon} active={isActive == 'Home'} handleClick= {handleActiveClick}/>
-            <SidebarOption text={'Explore'} Icon={TagIcon} active={isActive == 'Explore'} handleClick= {handleActiveClick}/>
-            <SidebarOption text={'Notification'} Icon={NotificationsActiveIcon} active={isActive == 'Notification'} handleClick= {handleActiveClick}/>
-            <SidebarOption text={'Messages'} Icon={MailOutlineOutlinedIcon} active={isActive == 'Messages'} handleClick= {handleActiveClick}/>
-            <SidebarOption text={'Bookmarks'} Icon={BookmarkBorderOutlinedIcon} active={isActive == 'Bookmarks'} handleClick= {handleActiveClick}/>
-            <SidebarOption text={'Lists'} Icon={ListAltOutlinedIcon} active={isActive == 'Lists'} handleClick= {handleActiveClick}/>
-            <SidebarOption text={'Profile'} Icon={PermIdentityOutlinedIcon} active={isActive == 'Profile'} handleClick= {handleActiveClick}/>
-            <SidebarOption text={'More'} Icon={MoreHorizOutlinedIcon} active={isActive == 'More'} handleClick= {handleActiveClick}/>
+            <SidebarOption text={'Home'} Icon={HomeIcon} active={isActive == 'Home'} handleClick= {handleActiveClick} opacity={false}/>
+            <SidebarOption text={'Explore'} Icon={TagIcon} active={isActive == 'Explore'} handleClick= {handleActiveClick}  opacity={true}/>
+            <SidebarOption text={'Notification'} Icon={NotificationsActiveIcon} active={isActive == 'Notification'} handleClick= {handleActiveClick} opacity={true}/>
+            <SidebarOption text={'Messages'} Icon={MailOutlineOutlinedIcon} active={isActive == 'Messages'} handleClick= {handleActiveClick} opacity={true}/>
+            <SidebarOption text={'Bookmarks'} Icon={BookmarkBorderOutlinedIcon} active={isActive == 'Bookmarks'} handleClick= {handleActiveClick} opacity={true}/>
+            <SidebarOption text={'Lists'} Icon={ListAltOutlinedIcon} active={isActive == 'Lists'} handleClick= {handleActiveClick} opacity={true}/>
+            <SidebarOption text={'Profile'} Icon={PermIdentityOutlinedIcon} active={isActive == 'Profile'} handleClick= {handleActiveClick} opacity={false}/>
+            <SidebarOption text={'More'} Icon={MoreHorizOutlinedIcon} active={isActive == 'More'} handleClick= {handleActiveClick} opacity={true}/>
 
             <Button variant='outlined' className='sidebar-tweet' fullWidth>Tweet</Button>
         </div>
