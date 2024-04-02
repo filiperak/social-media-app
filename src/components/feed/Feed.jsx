@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react';
 import db from '../../firebase';
 import FlipMove from 'react-flip-move';
 import firebase from 'firebase/compat/app';
-
-
+import { v4 as uuidv4 } from 'uuid';
 
 const Feed = () => {
     const [posts,setPosts] = useState([]);
@@ -57,6 +56,19 @@ const Feed = () => {
         })
         .catch((err) => console.log(err))
     }
+    const handleComment = (postId,comment,user) => {
+        const commentData = {
+            user: user,
+            comment: comment,
+            time: new Date(),
+            commentId: uuidv4()
+        };
+        db.collection('posts')
+        .doc(postId)
+        .update({
+            comments: firebase.firestore.FieldValue.arrayUnion(commentData)
+        })
+    }
     return (
         <div className='feed'>
             <div className="feed-header">
@@ -74,15 +86,16 @@ const Feed = () => {
                     text={post.text}
                     avatar={post.avatar}
                     image={post.image}
+                    uid={post.uid}
                     handleDelete={handleDelete}
                     id={post.id}
                     created_at={post.created_at}
                     likes={post.likes}
-                    // likes={post.likes.likesNumber}
                     handleLike={handleLike}
                     likedPost={likedPost}
                     handleRemoveLike={handleRemoveLike}
                     comments={post.comments}
+                    handleComment={handleComment}
                 />
             ))}
             </FlipMove>

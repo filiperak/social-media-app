@@ -8,9 +8,10 @@ import PublishIcon from '@mui/icons-material/Publish';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import db, { auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { Button } from '@mui/base';
 
 
 const Post = forwardRef(({
@@ -20,6 +21,7 @@ const Post = forwardRef(({
     text,
     image,
     avatar,
+    uid,
     handleDelete, 
     handleLike,
     likedPost,
@@ -27,19 +29,38 @@ const Post = forwardRef(({
     id,
     created_at,
     likes,
-    comments
+    comments,
+    handleComment
     },ref) => {
 
     const [user] = useAuthState(auth);
-    let userUid = user.uid
+    let userUid = user.uid;
+    let userDisplayName = user.displayName
+    const [likeColor,setLikeColor] = useState(false);
+    const [deleteButton,setDeleteButton] = useState(false);
+    const [commentInput,setCommentInput] = useState('');
 
     const onDeleteClick = () => {
+        if(uid != userUid){
+            setDeleteButton(!deleteButton)
+            return false;
+        }
         handleDelete(id);
     }
     const onLikeClick = () => {
-        likes.likedBy.includes(userUid)?handleRemoveLike(id,userUid) : handleLike(id,userUid);
+        if(likes.likedBy.includes(userUid)){
+            handleRemoveLike(id,userUid)
+            setLikeColor(false)
+        }else{
+            handleLike(id,userUid);
+            setLikeColor(true)
+        }
+        //likes.likedBy.includes(userUid)?handleRemoveLike(id,userUid) : handleLike(id,userUid);
 
-        // handleLike(id,userUid);
+    }
+    const onCommentSubmit = (e) => {
+        e.preventDefault();
+        handleComment(id,commentInput,userDisplayName)
     }
     const formatTimestamp = (timestamp) => {
         if (!timestamp || !timestamp.seconds) {
@@ -63,6 +84,15 @@ const Post = forwardRef(({
                                 {`@${username}`}
                             </span>
                         </h3>
+                        {deleteButton && 
+                        <span 
+                        className='post-delete-span'
+                        onClick={onDeleteClick}>
+                            Delete
+                        </span>}
+                        <MoreVertIcon
+                        onClick={()=> setDeleteButton(!deleteButton)}
+                        />
                     </div>
                     <div className="post-header-description">
                         <p>{text}</p>
@@ -74,19 +104,46 @@ const Post = forwardRef(({
                 <div className="post-time-stamp">
                 <span>{formatTimestamp(created_at)}</span>
                 </div>
+                <div className="post-comments">
+                    <div className="post-comment-list">
+                    {comments.length?(
+                        comments.map(elem =>  (
+                            <div
+                            key={elem.commentId}>
+                                <p>{elem.user}</p>
+                                <p>{elem.comment}</p>
+                            </div>
+                        ))
+                    ):(
+                        <span>no comments...</span>
+                    )}
+                    </div>
+                    <form 
+                    onSubmit={onCommentSubmit}
+                    className="post-comment-input">
+                        <input 
+                        onChange={e => setCommentInput(e.target.value)}
+                        value={commentInput}
+                        type="text" 
+                        placeholder='add comment...'/>
+                        <Button type='submit'>
+                            Post
+                        </Button>
+                    </form>
+                </div>
                 <div className="post-footer">
                     <ChatBubbleOutlineIcon fontSize='small'/>
                     <RepeatIcon fontSize='small'/>
                     <div className="post-likes">
                     <FavoriteBorderOutlinedIcon 
                     fontSize='small'
+                    style={likeColor ? { color: 'red' } : {}}
                     onClick={onLikeClick}/>
-                    {likes.likesNumber}
+                    <span>
+                        {!likes.likesNumber == 0? likes.likesNumber:null}
+                    </span>
                     </div>
-                    {/* <FavoriteBorderOutlinedIcon fontSize='small'/> */}
                     <PublishIcon fontSize='small'/>
-                    <span onClick={onDeleteClick}>X</span>
-
                 </div>
             </div>
         </div>
