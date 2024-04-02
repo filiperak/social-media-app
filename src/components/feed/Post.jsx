@@ -9,12 +9,45 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { forwardRef } from 'react';
+import db, { auth } from '../../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-const Post = forwardRef(({displayName,username,verified,text,image,avatar,handleDelete, id},ref) => {
+
+const Post = forwardRef(({
+    displayName,
+    username,
+    verified,
+    text,
+    image,
+    avatar,
+    handleDelete, 
+    handleLike,
+    likedPost,
+    handleRemoveLike,
+    id,
+    created_at,
+    likes,
+    comments
+    },ref) => {
+
+    const [user] = useAuthState(auth);
+    let userUid = user.uid
 
     const onDeleteClick = () => {
         handleDelete(id);
     }
+    const onLikeClick = () => {
+        likes.likedBy.includes(userUid)?handleRemoveLike(id,userUid) : handleLike(id,userUid);
+
+        // handleLike(id,userUid);
+    }
+    const formatTimestamp = (timestamp) => {
+        if (!timestamp || !timestamp.seconds) {
+            return 'nodate';    //PŠRISIO OVO KASNIJE
+        }
+        const date = new Date(timestamp.seconds * 1000);
+        return date.toLocaleString();
+    };
     return (
         <div className='post' ref={ref}>
             <div className="post-avatar">
@@ -38,10 +71,19 @@ const Post = forwardRef(({displayName,username,verified,text,image,avatar,handle
                 {image.trim().length != 0 && <img 
                 src={image}
                 alt="user img" />}
+                <div className="post-time-stamp">
+                <span>{formatTimestamp(created_at)}</span>
+                </div>
                 <div className="post-footer">
                     <ChatBubbleOutlineIcon fontSize='small'/>
                     <RepeatIcon fontSize='small'/>
-                    <FavoriteBorderOutlinedIcon fontSize='small'/>
+                    <div className="post-likes">
+                    <FavoriteBorderOutlinedIcon 
+                    fontSize='small'
+                    onClick={onLikeClick}/>
+                    {likes.likesNumber}
+                    </div>
+                    {/* <FavoriteBorderOutlinedIcon fontSize='small'/> */}
                     <PublishIcon fontSize='small'/>
                     <span onClick={onDeleteClick}>X</span>
 

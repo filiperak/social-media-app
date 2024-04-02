@@ -19,13 +19,13 @@ const TweetBox = () => {
             text:tweetMesssage,
             image:tweetImage,
             avatar:user.photoURL,
-            uid:user.uid
-            // displayName:'Filip Erak',
-            // username:'filiperak',
-            // verified:true,
-            // text:tweetMesssage,
-            // image:tweetImage,
-            // avatar:''
+            uid:user.uid,
+            created_at: new Date(),
+            likes:{
+                likesNumber:0,
+                likedBy:[]
+                },
+            comments:[]
         });
         setTweetImage('');
         setTweetMessage('');
