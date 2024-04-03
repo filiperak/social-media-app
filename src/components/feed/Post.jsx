@@ -51,6 +51,11 @@ const Post = forwardRef(({
 
     const onDeleteClick = () => {
         if(uid != userUid){
+            Swal.fire({
+                text: "Only the owner of the post can delete it!",
+                icon: "error",
+                confirmButtonColor: '#50b7f5' 
+              });
             setDeleteButton(!deleteButton)
             return false;
         }
