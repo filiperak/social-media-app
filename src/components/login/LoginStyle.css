@@ -31,4 +31,38 @@
 .login-yes > p{
     font-weight: 700;
     color: grey;
+
+}
+@media only screen and (max-width: 700px) {
+   .login{
+        flex: 0.85;
+   }
+   .login-not-log ,.login-yes{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 90vh;
+    align-items: center;
+    margin: 0 auto;
+    } 
+    .login-yes > p, .login-not-log > p{
+        font-weight: 700;
+        color: grey;
+        width: 70%;
+    }
+    .login-google-login{
+        width: 80% !important;
+        margin-bottom: 10px;
+    }
+    .login-logged-user{
+        text-align: center;
+    }
+    .login-logged-user .login-avatar{
+        margin: 0 auto;
+    }
+    .login-logged-user p:not(:first-child):nth-child(even){
+        font-size: 13px;
+        color: gray;
+
+    }
 }

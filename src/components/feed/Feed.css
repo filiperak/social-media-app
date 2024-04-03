@@ -1,8 +1,15 @@
 .feed {
-    flex: 0.5;
+    /* flex: 0.5; */
     border-right: 1px solid var(--twitter-background);
-    min-width: fit-content;
     overflow-y: scroll;
+
+}
+@media only screen and (min-width: 701px) {
+    .feed{
+        flex: 0.5;
+        min-width: fit-content;
+
+    }
 }
 .feed::-webkit-scrollbar{
     display: none;
@@ -22,4 +29,10 @@
 .feed-header > h2{
     font-size: 20px;
     font-weight: 800;
+}
+@media only screen and (max-width: 700px) {
+    .feed{
+        width: 100%;
+      
+    }
 }

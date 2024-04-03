@@ -21,9 +21,13 @@ const Login = () => {
             {user !== null ? (
                 <div className='login-yes'>
                 <h4>Your profile</h4>
-                <Avatar src={user.photoURL} className='login-avatar'/>
-                <p>{user.displayName}</p>
-                <p>{user.email}</p>
+                <div className="login-logged-user">
+                    <Avatar src={user.photoURL} className='login-avatar'/>
+                    <p>username:</p>
+                    <p>{user.displayName}</p>
+                    <p>email:</p>
+                    <p>{user.email}</p>
+                </div>
                 <Button 
                 onClick={() => auth.signOut()}
                 className='login-google-login'>

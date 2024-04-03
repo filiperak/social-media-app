@@ -9,7 +9,7 @@ const SidebarOption = ({text,Icon,active,handleClick,opacity}) => {
         onClick={() => handleClick(text)}
         >
             <Icon/>
-            <h2>{text}</h2>
+            <h2 className='sidebar-option-text'>{text}</h2>
         </div>
     );
 }

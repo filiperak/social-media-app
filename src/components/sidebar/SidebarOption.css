@@ -20,3 +20,12 @@
 .sidebar-option--active{
     color: var(--twitter-color);
 }
+@media only screen and (max-width: 700px) {
+    .sidebar-option-text{
+        display: none;
+    }
+    .sidebar-option > .MuiSvgIcon-root{
+        padding: 5px;
+    }
+    
+}
