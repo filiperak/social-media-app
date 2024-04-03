@@ -12,7 +12,6 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Button } from '@mui/base';
 import Swal from "sweetalert2";  
 
-
 const Post = forwardRef(({
     displayName,
     username,
@@ -97,7 +96,7 @@ const Post = forwardRef(({
     }
     const formatTimestamp = (timestamp) => {
         if (!timestamp || !timestamp.seconds) {
-            return 'nodate';    //PŠRISIO OVO KASNIJE
+            return 'nodate';   
         }
         const date = new Date(timestamp.seconds * 1000);
         return date.toLocaleString();
@@ -189,7 +188,7 @@ const Post = forwardRef(({
                     style={likeColor ? { color: 'red' } : {}}
                     onClick={onLikeClick}/>
                     <span>
-                        {!likes.likesNumber === 0? likes.likesNumber:null}
+                        {likes.likesNumber !== 0 ? likes.likesNumber : null}
                     </span>
                     </div>
                     <PublishIcon fontSize='small'/>
