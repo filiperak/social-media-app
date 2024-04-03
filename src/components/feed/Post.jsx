@@ -12,6 +12,8 @@ import { forwardRef, useEffect, useState , useRef} from 'react';
 import db, { auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Button } from '@mui/base';
+import Swal from "sweetalert2";  
+import SweetAlert2 from 'react-sweetalert2';
 
 
 const Post = forwardRef(({
@@ -32,10 +34,22 @@ const Post = forwardRef(({
     comments,
     handleComment
     },ref) => {
-
+        // Swal.fire({
+        //     title: "Login",
+        //     text: "Login to post!",
+        //     icon: "info",
+        //     confirmButtonColor: '#50b7f5' 
+        //   });
+          
+          
     const [user] = useAuthState(auth);
-    let userUid = user.uid;
-    let userDisplayName = user.displayName
+    let userUid = undefined;
+    let userDisplayName = undefined
+    if(user){
+        let userUid = user.uid;
+        let userDisplayName = user.displayName
+    }
+
     const [likeColor,setLikeColor] = useState(false);
     const [deleteButton,setDeleteButton] = useState(false);
     const [commentInput,setCommentInput] = useState('');
@@ -50,6 +64,16 @@ const Post = forwardRef(({
         handleDelete(id);
     }
     const onLikeClick = () => {
+        if(!user){
+            Swal.fire({
+                title: "Login",
+                text: "Login to like!",
+                icon: "info",
+                confirmButtonColor: '#50b7f5' 
+              });
+              
+            return false
+        }
         if(likes.likedBy.includes(userUid)){
             handleRemoveLike(id,userUid)
             setLikeColor(false)
@@ -57,11 +81,20 @@ const Post = forwardRef(({
             handleLike(id,userUid);
             setLikeColor(true)
         }
-        //likes.likedBy.includes(userUid)?handleRemoveLike(id,userUid) : handleLike(id,userUid);
-
     }
     const onCommentSubmit = (e) => {
         e.preventDefault();
+        if(!user){
+            Swal.fire({
+                title: "Login",
+                text: "Login to comment!",
+                icon: "info",
+                confirmButtonColor: '#50b7f5' 
+              });
+              
+            setCommentInput('');
+            return false
+        }
         handleComment(id,commentInput,userDisplayName);
         setCommentInput('');
     }

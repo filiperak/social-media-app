@@ -3,6 +3,7 @@ import './TweetBox.css'
 import { Avatar,Button } from '@mui/material';
 import db, { auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import Swal from "sweetalert2";  
 
 
 
@@ -12,6 +13,17 @@ const TweetBox = () => {
     const [user] = useAuthState(auth)
     const sendTweet = (e) => {
         e.preventDefault();
+        if(!user){
+            setTweetImage('');
+            setTweetMessage('');
+            Swal.fire({
+                title: "Login",
+                text: "Login to post!",
+                icon: "info",
+                confirmButtonColor: '#50b7f5' 
+              });    
+            return false
+        }
         db.collection('posts').add({
             displayName:user.displayName,
             username:user.email,
