@@ -34,14 +34,7 @@ const Post = forwardRef(({
     comments,
     handleComment
     },ref) => {
-        // Swal.fire({
-        //     title: "Login",
-        //     text: "Login to post!",
-        //     icon: "info",
-        //     confirmButtonColor: '#50b7f5' 
-        //   });
-          
-          
+   
     const [user] = useAuthState(auth);
     let userUid = undefined;
     let userDisplayName = undefined
