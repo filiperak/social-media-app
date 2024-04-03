@@ -3,13 +3,11 @@ import Feed from './components/feed/Feed';
 import Login from './components/login/Login';
 import Sidebar from './components/sidebar/Sidebar';
 import Widgets from './components/widgets/Widgets';
-import { BrowserRouter as Router, Routes, Route,Link } from "react-router-dom";
-import { auth } from './firebase';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      {/* <Sidebar/> */}
       <Router>
       <Sidebar/>
 

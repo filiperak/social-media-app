@@ -1,19 +1,16 @@
 import { Avatar } from '@mui/material';
 import './Post.css'
 import VerifiedIcon from '@mui/icons-material/Verified';
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import RepeatIcon from '@mui/icons-material/Repeat';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import PublishIcon from '@mui/icons-material/Publish';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { forwardRef, useEffect, useState , useRef} from 'react';
-import db, { auth } from '../../firebase';
+import { auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Button } from '@mui/base';
 import Swal from "sweetalert2";  
-import SweetAlert2 from 'react-sweetalert2';
 
 
 const Post = forwardRef(({
@@ -26,7 +23,6 @@ const Post = forwardRef(({
     uid,
     handleDelete, 
     handleLike,
-    likedPost,
     handleRemoveLike,
     id,
     created_at,
@@ -50,7 +46,7 @@ const Post = forwardRef(({
     const inputRef = useRef(null);
 
     const onDeleteClick = () => {
-        if(uid != userUid){
+        if(uid !== userUid){
             Swal.fire({
                 text: "Only the owner of the post can delete it!",
                 icon: "error",
@@ -93,7 +89,7 @@ const Post = forwardRef(({
             setCommentInput('');
             return false
         }
-        if(commentInput.trim().length == 0){
+        if(commentInput.trim().length === 0){
             return false;
         }
         handleComment(id,commentInput,userDisplayName);
@@ -141,13 +137,13 @@ const Post = forwardRef(({
                         <p>{text}</p>
                     </div>
                 </div>
-                {image.trim().length != 0 && <img 
+                {image.trim().length !== 0 && <img 
                 src={image}
                 alt="user img" />}
 
                 <div className="post-comments">
                     <p>
-                        <p>{comments.length == 0?('no comments'):(`${comments.length} comments`)}</p>
+                        <p>{comments.length === 0?('no comments'):(`${comments.length} comments`)}</p>
                         <p>{formatTimestamp(created_at)}</p>
                     </p>
                     <div className="post-comment-list">
@@ -193,7 +189,7 @@ const Post = forwardRef(({
                     style={likeColor ? { color: 'red' } : {}}
                     onClick={onLikeClick}/>
                     <span>
-                        {!likes.likesNumber == 0? likes.likesNumber:null}
+                        {!likes.likesNumber === 0? likes.likesNumber:null}
                     </span>
                     </div>
                     <PublishIcon fontSize='small'/>

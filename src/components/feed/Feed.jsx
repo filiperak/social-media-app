@@ -9,7 +9,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 const Feed = () => {
     const [posts,setPosts] = useState([]);
-    const [likedPost,setLikedPost] = useState(false)
 
     useEffect(() => {
         db.collection("posts")
@@ -92,7 +91,6 @@ const Feed = () => {
                     created_at={post.created_at}
                     likes={post.likes}
                     handleLike={handleLike}
-                    likedPost={likedPost}
                     handleRemoveLike={handleRemoveLike}
                     comments={post.comments}
                     handleComment={handleComment}
