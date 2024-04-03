@@ -63,6 +63,7 @@ const Feed = () => {
             time: new Date(),
             commentId: uuidv4()
         };
+        console.log(commentData);
         db.collection('posts')
         .doc(postId)
         .update({

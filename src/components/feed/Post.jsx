@@ -39,8 +39,8 @@ const Post = forwardRef(({
     let userUid = undefined;
     let userDisplayName = undefined
     if(user){
-        let userUid = user.uid;
-        let userDisplayName = user.displayName
+        userUid = user.uid;
+        userDisplayName = user.displayName
     }
 
     const [likeColor,setLikeColor] = useState(false);
@@ -87,6 +87,9 @@ const Post = forwardRef(({
               
             setCommentInput('');
             return false
+        }
+        if(commentInput.trim().length == 0){
+            return false;
         }
         handleComment(id,commentInput,userDisplayName);
         setCommentInput('');
