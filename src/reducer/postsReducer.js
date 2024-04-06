@@ -1,5 +1,5 @@
 export const initialState = {
-    posts: [],
+    postList: [],
     loading: false,
     error: null,
   };
@@ -17,11 +17,11 @@ export const initialState = {
         return {
           ...state,
           loading: false,
-          posts: action.payload,
+          postList: action.payload,
         };
       case "FETCH_POSTS_FAILURE":
         return {
-          ...state,
+        postList:false,
           loading: false,
           error: action.payload, //false
         };

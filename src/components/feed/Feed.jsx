@@ -1,25 +1,40 @@
 import './Feed.css'
 import TweetBox from './TweetBox';
 import Post from './Post';
-import { useEffect, useState } from 'react';
+import { useEffect,useContext } from 'react';
 import db from '../../firebase';
 import FlipMove from 'react-flip-move';
 import firebase from 'firebase/compat/app';
 import { v4 as uuidv4 } from 'uuid';
+import Loading from '../loading/Loading';
+import Error from '../error/Error'
+import { PostsContext } from '../../context/PostsContext';
 
 const Feed = () => {
-    const [posts,setPosts] = useState([]);
+    const {state, dispatch} = useContext(PostsContext);
+    const { postList,loading, error } = state;
 
     useEffect(() => {
+        dispatch({type: 'FETCH_POSTS_REQUEST'}); 
         db.collection("posts")
         .orderBy('created_at','desc')
         .onSnapshot((snapshot) => {
-            setPosts(snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data()
-            })));
+            dispatch({
+                type:'FETCH_POSTS_SUCCESS',
+                payload:snapshot.docs.map(doc => ({
+                    id:doc.id,
+                    ...doc.data()
+                }))
+            }); 
+        }, (error) => {
+            dispatch({
+                type: "FETCH_POSTS_FAILURE",
+                payload: error,
+            });
         });
     }, []);
+    
+
     const handleDelete = (postId) => {
         db.collection('posts')
         .doc(postId)
@@ -73,10 +88,11 @@ const Feed = () => {
             <div className="feed-header">
                 <h2>Home</h2>
             </div>
-
             <TweetBox/>
+            {loading ? <Loading/> : null}
+            {error ? <Error error={error}/> : null}
             <FlipMove>
-            {posts.map(post => (  
+            {postList.map(post => (  
                 <Post
                     key={post.id}
                     displayName={post.displayName}
@@ -99,6 +115,7 @@ const Feed = () => {
             </FlipMove>
         </div>
     );
+    
 }
  
 export default Feed;

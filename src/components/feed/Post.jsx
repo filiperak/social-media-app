@@ -148,13 +148,10 @@ const Post = forwardRef(({
                     <div className="post-comment-list">
                     {showComments &&(
                         comments.map(elem =>  (
-                            <>
-                            <div
-                            key={elem.commentId}>
+                            <div key={elem.commentId}>
                                 <p>{elem.user}{':'}</p>
                                 <p>{elem.comment}</p>
                             </div>
-                            </>
                         ))
                     )}
                     {showComments && (

@@ -1,10 +1,9 @@
 import { createContext, useReducer } from "react";
-import { postsReducer, initialState } from "../reducer/launchesReducer";
+import { postsReducer, initialState } from "../reducer/postsReducer";
 export const PostsContext = createContext();
 
-const LaunchesContextProvider = ({ children }) => {
+const PostsContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(postsReducer, initialState);
-
 
   return (
     <PostsContext.Provider value={{ state, dispatch }}>
