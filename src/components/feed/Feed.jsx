@@ -32,7 +32,7 @@ const Feed = () => {
                 payload: error,
             });
         });
-    }, []);
+    }, [dispatch]);
     
 
     const handleDelete = (postId) => {
